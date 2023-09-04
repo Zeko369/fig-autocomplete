@@ -373,7 +373,7 @@ const defaultCommands: Fig.Subcommand[] = [
     ],
   },
   {
-    name: "server",
+    name: ["s", "server"],
     description:
       "Launch a web server to access your application through a browser",
     options: [
@@ -381,7 +381,14 @@ const defaultCommands: Fig.Subcommand[] = [
         name: ["-e", "--environment"],
         description:
           "Specifies the environment to run this server under (e.g. test/development/production)",
-        args: { name: "environment" },
+        args: {
+          name: "environment",
+          generators: {
+            script: "ls config/environments",
+            postProcess: (out) =>
+              out.split("\n").map((env) => ({ name: env.replace(".rb", "") })),
+          },
+        },
       },
       {
         name: ["-p", "--port"],
@@ -477,7 +484,7 @@ const defaultCommands: Fig.Subcommand[] = [
     ],
   },
   {
-    name: "generate",
+    name: ["g", "generate"],
     description: "Use templates to generate Rails resources",
     args: [
       {
