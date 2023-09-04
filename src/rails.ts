@@ -448,7 +448,37 @@ const defaultCommands: Fig.Subcommand[] = [
     options: dbOptions,
   },
   {
-    name: "dbconsole",
+    name: "db:migrate:redo",
+    description: "Rollback the last database migration",
+    args: {
+      name: "STEP",
+      isOptional: true,
+      suggestions: ["STEP="],
+    },
+    options: dbOptions,
+  },
+  {
+    name: "db:rollback",
+    description: "Rollback the last database migration",
+    args: {
+      name: "STEP",
+      isOptional: true,
+      suggestions: ["STEP="],
+    },
+    options: dbOptions,
+  },
+  {
+    name: "db:drop",
+    description: "Drop your database",
+    options: dbOptions,
+  },
+  {
+    name: "db:version",
+    description: "Print the current schema version number",
+    options: dbOptions,
+  },
+  {
+    name: ["dbconsole", "db"],
     description:
       "Opens a console to your database (supports MySQL, PostgreSQL, and SQLite3)",
     options: [
