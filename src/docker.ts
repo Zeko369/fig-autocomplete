@@ -1,3 +1,17 @@
+export const dockerImagesGenerator: Fig.Generator = {
+  script: "docker images --format '{{.Repository}} {{.Size}} {{.Tag}} {{.ID}}'",
+  postProcess: function (out) {
+    return out.split("\n").map((image) => {
+      const [repo, size, tag, id] = image.split(" ");
+      return {
+        name: repo,
+        description: `${id}@${tag} - ${size}`,
+        icon: "fig://icon?type=docker",
+      };
+    });
+  },
+};
+
 const postProcessDockerPs: Fig.Generator["postProcess"] = (out) => {
   return out.split("\n").map((i) => {
     try {
@@ -1977,20 +1991,7 @@ default-cgroupns-mode option on the daemon (default)`,
       {
         name: "image",
         description: "The Docker image to use",
-        generators: {
-          script:
-            "docker images --format '{{.Repository}} {{.Size}} {{.Tag}} {{.ID}}'",
-          postProcess: function (out) {
-            return out.split("\n").map((image) => {
-              const [repo, size, tag, id] = image.split(" ");
-              return {
-                name: repo,
-                description: `${id}@${tag} - ${size}`,
-                icon: "fig://icon?type=docker",
-              };
-            });
-          },
-        },
+        generators: dockerImagesGenerator,
       },
       {
         name: "command",
