@@ -1,5 +1,6 @@
 const completionSpec: Fig.Spec = {
   name: "rspec",
+  icon: "https://rspec.info/images/logo.png",
   description:
     "Behaviour Driven Development for Ruby. Making TDD Productive and Fun",
   args: {
