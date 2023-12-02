@@ -554,6 +554,68 @@ const defaultCommands: Fig.Subcommand[] = [
       {
         name: "args",
         isVariadic: true,
+        generators: {
+          custom: async (tokens, executeShellCommand) => {
+            const [generator, ...args] = tokens.slice(2);
+            if (["model", "resource", "scaffold"].includes(generator)) {
+              if (args.length === 1) {
+                return [{ name: "__model_name__", priority: 80 }];
+              }
+
+              const types = [
+                "integer",
+                "primary_key",
+                "decimal",
+                "float",
+                "boolean",
+                "binary",
+                "string",
+                "text",
+                "date",
+                "time",
+                "datetime",
+              ];
+
+              const lastArg = args.at(-1);
+              if (lastArg.length === 0) {
+                return [{ name: "__column_name__", priority: 80 }];
+              }
+
+              if (lastArg.match(/^\w+$/)) {
+                return types.map((type) => ({ name: `${lastArg}:${type}` }));
+              }
+
+              if (lastArg.match(/^\w+:\w*/)) {
+                const [name, startOfType] = lastArg.split(":");
+                return types
+                  .filter((type) => type.startsWith(startOfType))
+                  .flatMap((type) => [
+                    { name: `${name}:${type}` },
+                    { name: `${name}:${type}:uniq` },
+                    { name: `${name}:${type}:index` },
+                  ]);
+              }
+
+              return [];
+            }
+
+            if (generator === "controller") {
+              return [
+                "index",
+                "show",
+                "new",
+                "create",
+                "edit",
+                "update",
+                "destroy",
+              ]
+                .filter((action) => !args.includes(action))
+                .map((action) => ({ name: action }));
+            }
+
+            return [];
+          },
+        },
       },
     ],
     options: [
