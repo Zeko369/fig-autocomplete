@@ -1,16 +1,14 @@
 // TODO: When #2138 is merged
 // import createRedwoodApp from "./create-redwood-app";
 import { specToSuggestions } from "./_utils/spec";
+import autocannon from "./autocannon";
 import vite from "./vite";
 
 // TODO: this for all the suggestions that have specs
 export const npxSuggestions: Fig.Suggestion[] = [
   // specToSuggestions(createRedwoodApp),
   specToSuggestions(vite),
-  {
-    // TODO: Import from autocannon when it's merged
-    name: "autocannon",
-  },
+  specToSuggestions(autocannon),
   {
     name: "babel",
     icon: "https://raw.githubusercontent.com/babel/logo/master/babel.png",
