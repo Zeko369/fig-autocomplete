@@ -463,6 +463,14 @@ This is similar to yarn unlink, except pnpm re-installs the dependency after rem
     },
     description: `Generate a patch out of a directory`,
   },
+  {
+    name: "patch-remove",
+    args: {
+      name: "package",
+      isVariadic: true,
+      // TODO: would be nice to have a generator of all patched packages
+    },
+  },
 ];
 
 const SUBCOMMANDS_RUN_SCRIPTS: Fig.Subcommand[] = [
@@ -548,8 +556,14 @@ Details at: https://pnpm.io/cli/audit`,
         description: `Only print advisories with severity greater than or equal to <severity>`,
         args: {
           name: "Audit Level",
+          default: "low",
           suggestions: ["low", "moderate", "high", "critical"],
         },
+      },
+      {
+        name: "--fix",
+        description:
+          "Add overrides to the package.json file in order to force non-vulnerable versions of the dependencies",
       },
       {
         name: "--json",
