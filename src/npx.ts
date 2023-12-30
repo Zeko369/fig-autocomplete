@@ -10,6 +10,10 @@ export const npxSuggestions: Fig.Suggestion[] = [
   specToSuggestions(vite),
   specToSuggestions(autocannon),
   {
+    name: "vite",
+    icon: "https://vitejs.dev/logo.svg",
+  },
+  {
     name: "babel",
     icon: "https://raw.githubusercontent.com/babel/logo/master/babel.png",
   },
