@@ -582,7 +582,8 @@ const defaultCommands: Fig.Subcommand[] = [
     description: "Use templates to generate Rails resources",
     args: [
       {
-        name: "generate",
+        name: "generator",
+        filterStrategy: "fuzzy",
         suggestions: [
           "model",
           "resource",
@@ -592,6 +593,10 @@ const defaultCommands: Fig.Subcommand[] = [
         ],
         generators: {
           script: ["rails", "g", "--help"],
+          cache: {
+            cacheByDirectory: true,
+            strategy: "stale-while-revalidate",
+          },
           postProcess(out) {
             const lines = out.split("Rails:")[1].trim().split("\n");
 
