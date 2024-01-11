@@ -1,14 +1,17 @@
-// TODO: When #2138 is merged
-// import createRedwoodApp from "./create-redwood-app";
+import createRedwoodApp from "./create-redwood-app";
 import { specToSuggestions } from "./_utils/spec";
 import autocannon from "./autocannon";
 import vite from "./vite";
 
 // TODO: this for all the suggestions that have specs
 export const npxSuggestions: Fig.Suggestion[] = [
-  // specToSuggestions(createRedwoodApp),
+  specToSuggestions(createRedwoodApp),
   specToSuggestions(vite),
   specToSuggestions(autocannon),
+  {
+    name: autocannon.name,
+    ...("icon" in autocannon && { icon: autocannon.icon }),
+  },
   {
     name: "vite",
     icon: "https://vitejs.dev/logo.svg",
